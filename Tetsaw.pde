@@ -7,7 +7,7 @@ int SHAPES_COUNT = 8;
 float GRID_PADDING = 48;
 
 //Platform variables
-boolean MOBILE = false;
+final boolean MOBILE = true;
 
 //Globally shared modifyable variables :)
 boolean debug = false;
@@ -23,7 +23,6 @@ void settings() {
 }
 
 void setup() {
-  //frameRate(1);
   grid = new Grid();
   if (!MOBILE) {
     maximizeWindow();
@@ -31,9 +30,9 @@ void setup() {
 }
 
 void maximizeWindow() {
-  surface.setResizable(true);
-  javax.swing.JFrame jframe = (javax.swing.JFrame)((processing.awt.PSurfaceAWT.SmoothCanvas)getSurface().getNative()).getFrame();
-  jframe.setExtendedState(jframe.getExtendedState() | javax.swing.JFrame.MAXIMIZED_BOTH);
+  //surface.setResizable(true);
+  //javax.swing.JFrame jframe = (javax.swing.JFrame)((processing.awt.PSurfaceAWT.SmoothCanvas)getSurface().getNative()).getFrame();
+  //jframe.setExtendedState(jframe.getExtendedState() | javax.swing.JFrame.MAXIMIZED_BOTH);
 }
 
 void calculateCellSize() {
@@ -45,10 +44,15 @@ void calculateCellSize() {
 }
 
 void draw() {
-  background(100);
+  background(200);
   debug = keyPressed && key == ' ';
   calculateCellSize();
   grid.render();
+
+
+  if (MOBILE) {
+    Rbtn_render();
+  }
 }
 
 boolean isLandscape() {
@@ -61,6 +65,10 @@ void mousePressed() {
 
 void mouseReleased() {
   grid.onMouseReleased();
+
+  if (MOBILE) {
+    Rbtn_onClick();
+  }
 }
 
 void keyPressed() {
