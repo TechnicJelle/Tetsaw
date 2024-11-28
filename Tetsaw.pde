@@ -30,9 +30,13 @@ void setup() {
 }
 
 void maximizeWindow() {
-  //surface.setResizable(true);
-  //javax.swing.JFrame jframe = (javax.swing.JFrame)((processing.awt.PSurfaceAWT.SmoothCanvas)getSurface().getNative()).getFrame();
-  //jframe.setExtendedState(jframe.getExtendedState() | javax.swing.JFrame.MAXIMIZED_BOTH);
+  //Call via reflection, so Android mode doesn't complain about non-existent variables
+  try {
+    surface.getClass().getMethod("setResizable", boolean.class).invoke(surface, true);
+  }
+  catch(Exception e) {
+    throw new RuntimeException(e);
+  }
 }
 
 void calculateCellSize() {
