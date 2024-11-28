@@ -7,7 +7,7 @@ int SHAPES_COUNT = 8;
 float GRID_PADDING = 48;
 
 //Platform variables
-final boolean MOBILE = true;
+final boolean MOBILE = false;
 
 //Globally shared modifyable variables :)
 boolean debug = false;
