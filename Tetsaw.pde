@@ -7,15 +7,16 @@ int SHAPES_COUNT = 8;
 float GRID_PADDING = 48;
 
 //Platform variables
-final boolean MOBILE = false;
 
 //Globally shared modifyable variables :)
 boolean debug = false;
+boolean mobile = false;
 float cellSize = -1;
 Grid grid = null;
 
 void settings() {
-  if (MOBILE) {
+  mobile = System.getProperty("java.vendor.url").toLowerCase().contains("android");
+  if (mobile) {
     fullScreen();
   } else {
     size(1280, 720);
@@ -24,7 +25,7 @@ void settings() {
 
 void setup() {
   grid = new Grid();
-  if (!MOBILE) {
+  if (!mobile) {
     maximizeWindow();
   }
 }
@@ -54,7 +55,7 @@ void draw() {
   grid.render();
 
 
-  if (MOBILE) {
+  if (mobile) {
     Rbtn_render();
   }
 }
@@ -70,7 +71,7 @@ void mousePressed() {
 void mouseReleased() {
   grid.onMouseReleased();
 
-  if (MOBILE) {
+  if (mobile) {
     Rbtn_onClick();
   }
 }
