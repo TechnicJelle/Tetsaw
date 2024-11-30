@@ -1,3 +1,5 @@
 buildPackage/
+buildPackage.*/
 sketch.properties
 *.blend1
+*~
