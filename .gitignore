@@ -1,5 +1,13 @@
+# Android Build Output
 buildPackage/
 buildPackage.*/
+
+# Processing IDE Java/Android Mode file
 sketch.properties
+
+# Blender
 *.blend1
+
+# Krita
 *~
+*-autosave.kra
