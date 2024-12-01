@@ -37,6 +37,8 @@ class Grid {
     for (Shape s : shapes) {
       s.finish();
     }
+
+    countOverlaps();
   }
 
   boolean anyUnclaimed() {
@@ -62,6 +64,13 @@ class Grid {
     //Shapes
     for (int i = 0; i < shapes.size(); i++) {
       shapes.get(i).render();
+    }
+
+    //Overlapping cells
+    for (int i = 0; i < GRID_COLUMNS; i++) {
+      for (int j = 0; j < GRID_ROWS; j++) {
+        cells[i][j].renderOverlap();
+      }
     }
 
     if (win) {
@@ -103,6 +112,10 @@ class Grid {
       s.onMouseReleased();
     }
 
+    countOverlaps();
+  }
+
+  void countOverlaps() {
     //find out how many shapes overlap each actual cells
     for (int i = 0; i < GRID_COLUMNS; i++) {
       for (int j = 0; j < GRID_ROWS; j++) {

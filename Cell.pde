@@ -42,4 +42,14 @@ class Cell {
     fill(colour, debug ? 100 : 255);
     rect(x, y, cellSize, cellSize);
   }
+
+  void renderOverlap() {
+    if (containedShapes > 1 && !mousePressed) {
+      stroke(100, 0, 0);
+      float sw = max(cellSize / 15, 1);
+      strokeWeight(sw);
+      noFill();
+      rect(x, y, cellSize, cellSize);
+    }
+  }
 }
