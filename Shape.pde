@@ -124,6 +124,8 @@ class Shape {
     translate(anchorPosX, anchorPosY);
 
     for (Cell c : cells) {
+      float sw = max(cellSize / 25, 1);
+      strokeWeight(sw);
       c.render(colour);
     }
 

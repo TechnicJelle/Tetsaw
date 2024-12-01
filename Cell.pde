@@ -25,6 +25,8 @@ class Cell {
 
   void render() {
     calcPos();
+    float sw = max(cellSize / 50, 1);
+    strokeWeight(sw);
     render(color(255));
 
     if (debug) {
@@ -38,8 +40,6 @@ class Cell {
   void render(color colour) {
     stroke(0);
     fill(colour, debug ? 100 : 255);
-    float sw = max(cellSize / 25, 1);
-    strokeWeight(sw);
     rect(x, y, cellSize, cellSize);
   }
 }
