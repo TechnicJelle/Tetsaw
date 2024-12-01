@@ -33,7 +33,9 @@ void setup() {
 void maximizeWindow() {
   //Call via reflection, so Android mode doesn't complain about non-existent variables
   try {
+    PImage icon = loadImage("icon.png");
     surface.getClass().getMethod("setResizable", boolean.class).invoke(surface, true);
+    surface.getClass().getMethod("setIcon", PImage.class).invoke(surface, icon);
   }
   catch(Exception e) {
     throw new RuntimeException(e);
