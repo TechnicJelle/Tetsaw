@@ -1,21 +1,34 @@
+enum Screen {
+  Main, Game
+}
+
 //Gameplay variables
-int GRID_COLUMNS = 10;
-int GRID_ROWS = 10;
-int SHAPES_COUNT = 8;
+final int GRID_COLUMNS = 10;
+final int GRID_ROWS = 10;
+final int SHAPES_COUNT = 8;
 
 //Visual variables
-float GRID_PADDING = 48;
+final float GRID_PADDING = 48;
+final float UI_EDGE_PADDING = 32;
 
-//Globally shared modifyable variables :)
+
+//Globally shared modifiable variables :)
+Screen screen = Screen.Main;
 PImage icon;
 boolean debug = false;
-boolean mobile = false;
+boolean isMobile = false;
 float cellSize = -1;
 Grid grid = null;
+float uiSize;
+
+Button backButton;
+Button mobileResetButton;
+Button startButton;
+Button desktopQuitButton;
 
 void settings() {
-  mobile = System.getProperty("java.vendor.url").toLowerCase().contains("android");
-  if (mobile) {
+  isMobile = System.getProperty("java.vendor.url").toLowerCase().contains("android");
+  if (isMobile) {
     fullScreen();
   } else {
     size(1280, 720);
@@ -24,13 +37,18 @@ void settings() {
 
 void setup() {
   icon = loadImage("icon.png");
-  grid = new Grid();
-  if (!mobile) {
-    maximizeWindow();
+  if (isMobile) {
+    mobileResetButton = new MobileResetButton();
+  } else {
+    desktopSurfaceSetup();
+    desktopQuitButton = new DesktopQuitButton();
   }
+  grid = new Grid();
+  backButton = new BackButton();
+  startButton = new StartButton();
 }
 
-void maximizeWindow() {
+void desktopSurfaceSetup() {
   //Call via reflection, so Android mode doesn't complain about non-existent variables
   try {
     surface.getClass().getMethod("setResizable", boolean.class).invoke(surface, true);
@@ -51,17 +69,49 @@ void calculateCellSize() {
 
 void draw() {
   background(200);
-  debug = keyPressed && key == ' ';
-  calculateCellSize();
-  grid.render();
+  uiSize = max(width, height) / 16;
+  switch(screen) {
+  case Main:
+    {
+      //Title
+      int siz = min(width, height) / 5;
+      image(icon, width/2-siz*2.1, height*0.1, siz, siz);
+      textAlign(LEFT, BASELINE);
+      textSize(siz);
+      fill(0);
+      float off = siz/20;
+      text("Tetsaw", width/2-siz*1.15 + off, height*0.1+siz*0.9 + off);
+      fill(255);
+      text("Tetsaw", width/2-siz*1.15, height*0.1+siz*0.9);
 
+      //Buttons
+      startButton.render();
+      if (!isMobile) {
+        desktopQuitButton.render();
+      }
+    }
+    break;
+  case Game:
+    {
+      debug = keyPressed && key == ' ';
+      calculateCellSize();
+      grid.render();
 
-  if (mobile) {
-    Rbtn_render();
+      //Buttons
+      if (isMobile) {
+        mobileResetButton.render();
+      }
+      backButton.render();
+
+      //Watermark
+      if (isLandscape()) {
+        image(icon, UI_EDGE_PADDING, UI_EDGE_PADDING, uiSize, uiSize);
+      } else {
+        image(icon, width/2-uiSize/2, (height - uiSize - UI_EDGE_PADDING), uiSize, uiSize);
+      }
+    }
+    break;
   }
-
-  int siz = max(width, height) / 16;
-  image(icon, 8, 8, siz, siz);
 }
 
 boolean isLandscape() {
@@ -69,14 +119,30 @@ boolean isLandscape() {
 }
 
 void mousePressed() {
-  grid.onMousePressed();
+  switch (screen) {
+  case Main:
+    break;
+  case Game:
+    grid.onMousePressed();
+    break;
+  }
 }
 
 void mouseReleased() {
-  grid.onMouseReleased();
-
-  if (mobile) {
-    Rbtn_onClick();
+  switch (screen) {
+  case Main:
+    startButton.clickCheck();
+    if (!isMobile) {
+      desktopQuitButton.clickCheck();
+    }
+    break;
+  case Game:
+    grid.onMouseReleased();
+    if (isMobile) {
+      mobileResetButton.clickCheck();
+    }
+    backButton.clickCheck();
+    break;
   }
 }
 
