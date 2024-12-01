@@ -68,7 +68,7 @@ void calculateCellSize() {
 }
 
 void draw() {
-  background(200);
+  background(69, 9, 122);
   uiSize = max(width, height) / 16;
   switch(screen) {
   case Main:
