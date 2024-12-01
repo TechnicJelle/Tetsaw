@@ -6,9 +6,8 @@ int SHAPES_COUNT = 8;
 //Visual variables
 float GRID_PADDING = 48;
 
-//Platform variables
-
 //Globally shared modifyable variables :)
+PImage icon;
 boolean debug = false;
 boolean mobile = false;
 float cellSize = -1;
@@ -24,6 +23,7 @@ void settings() {
 }
 
 void setup() {
+  icon = loadImage("icon.png");
   grid = new Grid();
   if (!mobile) {
     maximizeWindow();
@@ -33,7 +33,6 @@ void setup() {
 void maximizeWindow() {
   //Call via reflection, so Android mode doesn't complain about non-existent variables
   try {
-    PImage icon = loadImage("icon.png");
     surface.getClass().getMethod("setResizable", boolean.class).invoke(surface, true);
     surface.getClass().getMethod("setIcon", PImage.class).invoke(surface, icon);
   }
@@ -60,6 +59,9 @@ void draw() {
   if (mobile) {
     Rbtn_render();
   }
+
+  int siz = max(width, height) / 16;
+  image(icon, 8, 8, siz, siz);
 }
 
 boolean isLandscape() {
