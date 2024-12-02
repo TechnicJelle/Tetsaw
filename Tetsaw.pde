@@ -22,7 +22,7 @@ Grid grid = null;
 float uiSize;
 
 Button backButton;
-Button mobileResetButton;
+Button resetButton;
 Button startButton;
 Button desktopQuitButton;
 
@@ -37,13 +37,12 @@ void settings() {
 
 void setup() {
   icon = loadImage("icon.png");
-  if (isMobile) {
-    mobileResetButton = new MobileResetButton();
-  } else {
+  if (!isMobile) {
     desktopSurfaceSetup();
     desktopQuitButton = new DesktopQuitButton();
   }
   grid = new Grid();
+  resetButton = new MobileResetButton();
   backButton = new BackButton();
   startButton = new StartButton();
 }
@@ -98,9 +97,7 @@ void draw() {
       grid.render();
 
       //Buttons
-      if (isMobile) {
-        mobileResetButton.render();
-      }
+      resetButton.render();
       backButton.render();
 
       //Watermark
@@ -138,9 +135,7 @@ void mouseReleased() {
     break;
   case Game:
     grid.onMouseReleased();
-    if (isMobile) {
-      mobileResetButton.clickCheck();
-    }
+    resetButton.clickCheck();
     backButton.clickCheck();
     break;
   }
