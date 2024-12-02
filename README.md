@@ -4,6 +4,8 @@ A small puzzle game for Linux, Android and Windows.
 
 Fit the puzzle pieces into the grid, and win!
 
+## [Click here to download!](../../releases/latest)
+
 ![screenshot of the game](https://github.com/user-attachments/assets/6ec6cb2d-10ca-4be5-868a-669329fc5512)
 
 
