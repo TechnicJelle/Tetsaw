@@ -1,18 +1,16 @@
-enum Screen {
-  Main, Game
-}
-
-//Gameplay variables
-final int GRID_COLUMNS = 10;
-final int GRID_ROWS = 10;
-final int SHAPES_COUNT = 8;
-
-//Visual variables
+//Visual constants
 final float GRID_PADDING = 48;
 final float UI_EDGE_PADDING = 32;
 
+//Gameplay variables
+int GRID_COLUMNS = 10;
+int GRID_ROWS = 10;
+int SHAPES_COUNT = 8;
 
-//Globally shared modifiable variables :)
+//Screen tracking
+enum Screen {
+  Main, Game,
+}
 Screen screen = Screen.Main;
 PImage icon;
 boolean debug = false;
@@ -21,10 +19,14 @@ float cellSize = -1;
 Grid grid = null;
 float uiSize;
 
+//UI Elements
 Button backButton;
 Button resetButton;
 Button startButton;
 Button desktopQuitButton;
+Option colsOption;
+Option rowsOption;
+Option shapesOption;
 
 void settings() {
   isMobile = System.getProperty("java.vendor.url").toLowerCase().contains("android");
@@ -45,6 +47,9 @@ void setup() {
   resetButton = new MobileResetButton();
   backButton = new BackButton();
   startButton = new StartButton();
+  colsOption = new ColsOption();
+  rowsOption = new RowsOption();
+  shapesOption = new ShapesOption();
 }
 
 void desktopSurfaceSetup() {
@@ -88,6 +93,9 @@ void draw() {
       if (!isMobile) {
         desktopQuitButton.render();
       }
+      colsOption.render(GRID_COLUMNS);
+      rowsOption.render(GRID_ROWS);
+      shapesOption.render(SHAPES_COUNT);
     }
     break;
   case Game:
@@ -132,6 +140,9 @@ void mouseReleased() {
     if (!isMobile) {
       desktopQuitButton.clickCheck();
     }
+    colsOption.clickCheck();
+    rowsOption.clickCheck();
+    shapesOption.clickCheck();
     break;
   case Game:
     grid.onMouseReleased();

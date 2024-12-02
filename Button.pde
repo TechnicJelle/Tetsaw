@@ -2,10 +2,10 @@ abstract class Button {
   protected float x, y;
   protected float hght;
   protected float wdth;
-  protected String text;
+  protected String label;
 
-  Button(String text) {
-    this.text = text;
+  Button(String label) {
+    this.label = label;
     calculatePosAndHeight();
   }
 
@@ -23,7 +23,7 @@ abstract class Button {
 
     //Calculate button width
     textStyle();
-    float tw = textWidth(text);
+    float tw = textWidth(label);
     wdth = max(tw*1.3, hght);
 
     stroke(0);
@@ -41,7 +41,7 @@ abstract class Button {
     rect(x, y, wdth, hght, hght/6);
     fill(0);
     textStyle();
-    text(text, x + wdth/2, y + hght/2);
+    text(label, x + wdth/2, y + hght/2);
   }
 
   boolean mouseOver() {
@@ -62,8 +62,8 @@ class MobileResetButton extends Button {
 
   void calculatePosAndHeight() {
     hght = uiSize;
-    y = height - hght - UI_EDGE_PADDING;
     x = width - wdth - UI_EDGE_PADDING;
+    y = height - hght - UI_EDGE_PADDING;
   }
 
   void onClick() {
@@ -78,8 +78,8 @@ class BackButton extends Button {
 
   void calculatePosAndHeight() {
     hght = uiSize;
-    y = height - hght - UI_EDGE_PADDING;
     x = UI_EDGE_PADDING;
+    y = height - hght - UI_EDGE_PADDING;
   }
 
   void onClick() {
@@ -94,11 +94,14 @@ class StartButton extends Button {
 
   void calculatePosAndHeight() {
     hght = uiSize * 1.2;
-    y = height/2 - hght;
     x = width/2 - wdth/2;
+    y = height/2 - hght;
   }
 
   void onClick() {
+    if (GRID_COLUMNS * GRID_ROWS < SHAPES_COUNT) return;
+
+    if (grid == null) grid = new Grid();
     screen = Screen.Game;
   }
 }
@@ -109,9 +112,9 @@ class DesktopQuitButton extends Button {
   }
 
   void calculatePosAndHeight() {
-    hght = uiSize * 1.2;
-    y = height - hght*1.5;
+    hght = uiSize * 0.8;
     x = width/2 - wdth/2;
+    y = height - hght*1.3;
   }
 
   void onClick() {
