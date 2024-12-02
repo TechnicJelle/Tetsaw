@@ -36,7 +36,7 @@ abstract class OptionButton extends Button {
 
   void calculatePosAndHeight() {
     hght = uiSize;
-    final float uOff = uiSize*2.3;
+    final float uOff = uiSize*2.6;
     final float off = left ? -uOff : uOff;
     x = width/2 - wdth/2 + off;
     y = height/2 + hght*(0.2+hOff*1.1);

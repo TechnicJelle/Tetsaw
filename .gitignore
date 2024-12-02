@@ -2,6 +2,10 @@
 buildPackage/
 buildPackage.*/
 
+# Desktop Build Output
+linux-amd64/
+windows-amd64/
+
 # Processing IDE Java/Android Mode file
 sketch.properties
 
