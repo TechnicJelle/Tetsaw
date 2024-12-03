@@ -55,8 +55,8 @@ abstract class Button {
   }
 }
 
-class MobileResetButton extends Button {
-  MobileResetButton() {
+class ResetButton extends Button {
+  ResetButton() {
     super("R");
   }
 

@@ -44,7 +44,7 @@ void setup() {
     desktopQuitButton = new DesktopQuitButton();
   }
   grid = new Grid();
-  resetButton = new MobileResetButton();
+  resetButton = new ResetButton();
   backButton = new BackButton();
   startButton = new StartButton();
   colsOption = new ColsOption();
