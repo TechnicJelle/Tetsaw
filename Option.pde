@@ -58,14 +58,14 @@ abstract class UpOptionButton extends OptionButton {
 class ColsOption extends Option {
   class ColsDownButton extends DownOptionButton {
     void onClick() {
-      GRID_COLUMNS--;
+      GRID_COLUMNS = max(GRID_COLUMNS - 1, max(1, SHAPES_COUNT/GRID_ROWS));
       grid = null;
     }
   }
 
   class ColsUpButton extends UpOptionButton {
     void onClick() {
-      GRID_COLUMNS++;
+      GRID_COLUMNS = max(GRID_COLUMNS + 1, max(1, SHAPES_COUNT/GRID_ROWS));
       grid = null;
     }
   }
@@ -80,14 +80,14 @@ class ColsOption extends Option {
 class RowsOption extends Option {
   class RowsDownButton extends DownOptionButton {
     void onClick() {
-      GRID_ROWS--;
+      GRID_ROWS = max(GRID_ROWS - 1, max(1, SHAPES_COUNT/GRID_COLUMNS));
       grid = null;
     }
   }
 
   class RowsUpButton extends UpOptionButton {
     void onClick() {
-      GRID_ROWS++;
+      GRID_ROWS = max(GRID_ROWS + 1, max(1, SHAPES_COUNT/GRID_COLUMNS));
       grid = null;
     }
   }
@@ -102,14 +102,14 @@ class RowsOption extends Option {
 class ShapesOption extends Option {
   class ShapesDownButton extends DownOptionButton {
     void onClick() {
-      SHAPES_COUNT--;
+      SHAPES_COUNT = constrain(SHAPES_COUNT - 1, 1, GRID_ROWS*GRID_COLUMNS);
       grid = null;
     }
   }
 
   class ShapesUpButton extends UpOptionButton {
     void onClick() {
-      SHAPES_COUNT++;
+      SHAPES_COUNT = constrain(SHAPES_COUNT + 1, 1, GRID_ROWS*GRID_COLUMNS);
       grid = null;
     }
   }
