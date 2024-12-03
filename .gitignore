@@ -6,6 +6,9 @@ buildPackage.*/
 linux-amd64/
 windows-amd64/
 
+# Processing IDE
+*.autosave
+
 # Processing IDE Java/Android Mode file
 sketch.properties
 

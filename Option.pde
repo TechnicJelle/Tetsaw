@@ -58,14 +58,14 @@ abstract class UpOptionButton extends OptionButton {
 class ColsOption extends Option {
   class ColsDownButton extends DownOptionButton {
     void onClick() {
-      GRID_COLUMNS--;
+      applyConstraints(-1, 0, 0);
       grid = null;
     }
   }
 
   class ColsUpButton extends UpOptionButton {
     void onClick() {
-      GRID_COLUMNS++;
+      applyConstraints(1, 0, 0);
       grid = null;
     }
   }
@@ -80,14 +80,14 @@ class ColsOption extends Option {
 class RowsOption extends Option {
   class RowsDownButton extends DownOptionButton {
     void onClick() {
-      GRID_ROWS--;
+      applyConstraints(0, -1, 0);
       grid = null;
     }
   }
 
   class RowsUpButton extends UpOptionButton {
     void onClick() {
-      GRID_ROWS++;
+      applyConstraints(0, 1, 0);
       grid = null;
     }
   }
@@ -102,14 +102,14 @@ class RowsOption extends Option {
 class ShapesOption extends Option {
   class ShapesDownButton extends DownOptionButton {
     void onClick() {
-      SHAPES_COUNT--;
+      applyConstraints(0, 0, -1);
       grid = null;
     }
   }
 
   class ShapesUpButton extends UpOptionButton {
     void onClick() {
-      SHAPES_COUNT++;
+      applyConstraints(0, 0, 1);
       grid = null;
     }
   }
@@ -118,5 +118,19 @@ class ShapesOption extends Option {
     super("Shapes", 2);
     downButton = new ShapesDownButton();
     upButton = new ShapesUpButton();
+  }
+}
+
+void applyConstraints(int colChange, int rowChange, int shapesCountChange) {
+  if (shapesCountChange != 0) {
+    SHAPES_COUNT = max(1, SHAPES_COUNT + shapesCountChange);
+    if (SHAPES_COUNT > GRID_COLUMNS*GRID_ROWS) {
+      if (GRID_COLUMNS > GRID_ROWS) GRID_ROWS += 1;
+      else GRID_COLUMNS += 1;
+    }
+  } else {
+    GRID_COLUMNS = max(1, GRID_COLUMNS + colChange);
+    GRID_ROWS = max(1, GRID_ROWS + rowChange);
+    SHAPES_COUNT = constrain(SHAPES_COUNT, 1, GRID_COLUMNS*GRID_ROWS);
   }
 }
