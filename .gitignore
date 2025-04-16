@@ -11,6 +11,7 @@ windows-amd64/
 
 # Processing IDE Java/Android Mode file
 sketch.properties
+/*android
 
 # Blender
 *.blend1

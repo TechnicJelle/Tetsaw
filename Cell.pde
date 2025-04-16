@@ -14,13 +14,8 @@ class Cell {
   }
 
   void calcPos() {
-    if (isLandscape()) {
-      this.x = (width-cellSize*GRID_COLUMNS)/2 + cellSize * col;
-      this.y = cellSize * row + GRID_PADDING;
-    } else {
-      this.x = (width-cellSize*GRID_COLUMNS)/2 + cellSize * col;
-      this.y = cellSize * row + GRID_PADDING;
-    }
+    this.x = (width-cellSize*GRID_COLUMNS)/2 + cellSize * col;
+    this.y = cellSize * row + GRID_PADDING;
   }
 
   void render() {
