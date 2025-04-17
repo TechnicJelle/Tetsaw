@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  PROCESSING_TAG: processing-1293-4.3
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Processing
+        uses: pr1metine/setup-processing@v2.1.0
+        with:
+          tag: ${{ env.PROCESSING_TAG }}
+      - name: Export
+        # The processing-java prefers absolute paths on Windows.
+        run: processing-java --sketch="${{ github.workspace }}" --output="${{ github.workspace }}/out" --force --export
+      - name: Linux workaround for permissions
+        # Zipping up the project clears the executable bit on the Java binary, so make the startup script enable it again.
+        #  https://github.com/actions/upload-artifact?tab=readme-ov-file#permission-loss
+        if: runner.os == 'Linux'
+        run: sed -i '5i chmod +x $APPDIR/java/bin/java' out/${{ github.event.repository.name }}
+      - name: Prepare for upload
+        run: |
+          rm -rf ./out/source/
+          mkdir ./upload/
+          mv ./out/ "./upload/${{ github.event.repository.name }}_${{ runner.os }}_(${{ env.GITHUB_SHA_SHORT }})/"
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ github.event.repository.name }}_${{ runner.os }}_(${{ env.GITHUB_SHA_SHORT }})"
+          path: "./upload/"
