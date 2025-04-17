@@ -12,12 +12,13 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2022]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Processing
-        uses: pr1metine/setup-processing@v2.1.0
+        uses: pr1metine/setup-processing@v2
         with:
           tag: ${{ env.PROCESSING_TAG }}
       - name: Export
