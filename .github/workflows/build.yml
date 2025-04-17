@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup Processing
-        uses: pr1metine/setup-processing@v2
+        uses: pr1metine/setup-processing@v2.2.0
         with:
           tag: ${{ env.PROCESSING_TAG }}
       - name: Export
