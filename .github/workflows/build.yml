@@ -29,13 +29,20 @@ jobs:
         #  https://github.com/actions/upload-artifact?tab=readme-ov-file#permission-loss
         if: runner.os == 'Linux'
         run: sed -i '5i chmod +x $APPDIR/java/bin/java' out/${{ github.event.repository.name }}
-      - name: Prepare for upload
+      - name: Prepare for upload (Linux)
+        if: runner.os == 'Linux'
         run: |
           rm -rf ./out/source/
           mkdir ./upload/
-          mv ./out/ "./upload/${{ github.event.repository.name }}_${{ runner.os }}_(${{ env.GITHUB_SHA_SHORT }})/"
+          mv ./out/ "./upload/${{ github.event.repository.name }}_${{ runner.os }}/"
+      - name: Prepare for upload (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          Remove-Item -Recurse -Force ./out/source/
+          New-Item -Path . -Name "upload" -ItemType "directory"
+          Move-Item -Path "./out/" -Destination "./upload/${{ github.event.repository.name }}_${{ runner.os }}/"
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ github.event.repository.name }}_${{ runner.os }}_(${{ env.GITHUB_SHA_SHORT }})"
+          name: "${{ github.event.repository.name }}_${{ runner.os }}"
           path: "./upload/"
