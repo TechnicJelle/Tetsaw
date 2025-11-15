@@ -6,13 +6,11 @@ Fit the puzzle pieces into the grid, and win!
 
 ## [Click here to download!](../../releases/latest)
 
-![screenshot of the game](https://github.com/user-attachments/assets/6ec6cb2d-10ca-4be5-868a-669329fc5512)
-
+![screenshot of the game](.github/readme_assets/in-game.png)
 
 ### Customisable game parameters!
 
-![screenshot of the main menu](https://github.com/user-attachments/assets/e54f938c-77ec-40d4-9636-e204574d6dfd)
-
+![screenshot of the main menu](.github/readme_assets/main menu.png)
 
 ### Demonstration of how puzzles get generated:
 
