@@ -10,7 +10,7 @@ Fit the puzzle pieces into the grid, and win!
 
 ### Customisable game parameters!
 
-![screenshot of the main menu](.github/readme_assets/main menu.png)
+![screenshot of the main menu](.github/readme_assets/main_menu.png)
 
 ### Demonstration of how puzzles get generated:
 
